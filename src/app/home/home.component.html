@@ -1,0 +1,72 @@
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+
+<div class="search-container">
+  <input type="number" [(ngModel)]="searchId" placeholder="Search character by ID" class="search-input">
+  <button (click)="searchCharacterById()" class="search-button">Search by ID</button>
+</div>
+
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="loader-container">
+    <img src="assets/images/demonslayer_loader.png" alt="Cargando..." class="loader-image">
+  </div>
+</div>
+
+<div *ngIf="errorMessage" class="error-message">
+  <p>{{ errorMessage }}</p>
+</div>
+
+<div *ngIf="selectedCharacter" class="character-card">
+  <h2>{{ selectedCharacter.name }}</h2>
+  <img [src]="selectedCharacter.img" alt="{{ selectedCharacter.name }}" class="character-image">
+  <p class="character-description">{{ selectedCharacter.description }}</p>
+
+  <div *ngIf="selectedCharacter.combat_style && selectedCharacter.combat_style.length > 0" class="combat-styles-section">
+    <h3>Estilos de Combate:</h3>
+    <ul class="combat-styles-list">
+      <li *ngFor="let style of selectedCharacter.combat_style" class="combat-style-item">
+        <h4>{{ style.name }}</h4>
+        <p>{{ style.description }}</p>
+        <img *ngIf="style.img" [src]="style.img" alt="{{ style.name }}" class="combat-style-image">
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="!selectedCharacter && searchId !== null && searchAttempted && !isLoading && !errorMessage" class="no-character-found">
+  <p>No character found with ID: {{ searchId }}</p>
+</div>
+
+<div *ngIf="!selectedCharacter && searchId === null && !searchAttempted && !isLoading && !errorMessage" class="initial-message">
+  <p>Ingresa un ID para buscar un personaje de Demon Slayer.</p>
+</div>
+
+<hr>
+
+<h2>Todos los Personajes</h2>
+
+<div *ngIf="isLoadingAllCharacters" class="loading-overlay">
+  <div class="loader-container">
+    <img src="assets/images/demonslayer_loader.png" alt="Cargando todos los personajes..." class="loader-image">
+  </div>
+</div>
+
+<div *ngIf="errorMessageAllCharacters" class="error-message">
+  <p>{{ errorMessageAllCharacters }}</p>
+</div>
+
+<div class="character-grid">
+  <div *ngFor="let character of allCharacters" class="flip-card">
+    <div class="flip-card-inner">
+      <a [routerLink]="['/character', slugify(character.name)]" class="flip-card-front">
+        <img [src]="character.img" alt="{{ character.name }}" class="grid-image">
+      </a>
+      <a [routerLink]="['/character', slugify(character.name)]" class="flip-card-back">
+        <h3>{{ character.name }}</h3>
+      </a>
+    </div>
+  </div>
+</div>

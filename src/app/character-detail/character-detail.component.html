@@ -1,0 +1,40 @@
+<div class="character-detail-container">
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="loader-container">
+      <img src="assets/images/demonslayer_loader.png" alt="Cargando detalles..." class="loader-image">
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="character" class="character-card-detail">
+    <div class="navigation-buttons">
+      <button *ngIf="currentCharacterIndex > 0" (click)="goToPreviousCharacter()" class="nav-button">Anterior</button>
+      <button (click)="goBack()" class="back-button">Volver</button>
+      <button *ngIf="currentCharacterIndex < allCharacters.length - 1" (click)="goToNextCharacter()" class="nav-button">Siguiente</button>
+    </div>
+
+    <div class="detail-columns">
+      <div class="left-column">
+        <img [src]="character.img" alt="{{ character.name }}" class="character-image-detail">
+      </div>
+      <div class="right-column">
+        <h2>{{ character.name }}</h2>
+        <p class="character-description-detail">{{ character.description }}</p>
+
+        <div *ngIf="character.combat_style && character.combat_style.length > 0" class="combat-styles-section-detail">
+          <h3>Estilos de Combate:</h3>
+          <ul class="combat-styles-list-detail">
+            <li *ngFor="let style of character.combat_style" class="combat-style-item-detail">
+              <h4>{{ style.name }}</h4>
+              <p>{{ style.description }}</p>
+              <img *ngIf="style.img" [src]="style.img" alt="{{ style.name }}" class="combat-style-image-detail">
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
