@@ -26,13 +26,15 @@
 
         <div *ngIf="character.combat_style && character.combat_style.length > 0" class="combat-styles-section-detail">
           <h3>Estilos de Combate:</h3>
-          <ul class="combat-styles-list-detail">
-            <li *ngFor="let style of character.combat_style" class="combat-style-item-detail">
+          <div class="combat-styles-list-detail">
+            <div *ngFor="let style of character.combat_style" class="combat-style-item-detail">
+              <div class="combat-style-item-detail-text">
               <h4>{{ style.name }}</h4>
               <p>{{ style.description }}</p>
+              </div>
               <img *ngIf="style.img" [src]="style.img" alt="{{ style.name }}" class="combat-style-image-detail">
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
